@@ -1,0 +1,12 @@
+.box{
+  width: 100px;
+  height: 100px;
+  background-color: aquamarine;
+  transition: all 1s ease;
+}
+.box-start{
+  margin-left: 200px;
+} 
+.box-end{
+  margin-left: 0;
+}

@@ -14,6 +14,10 @@ import LayoutEffect from './layoutEffect'
 import UseCallback from './useCallback'
 import UseMemo from './useMemo'
 import UseReducer from './useReducer'
+import Chain from './chain'
+import Hoc from './hoc'
+import UseUser from './useUser'
+import Animation from './animation'
 import './index.less'
 
 const App = function () {
@@ -32,6 +36,10 @@ const App = function () {
           <li><Link to="/useCallback">08-useCallback</Link></li>
           <li><Link to="/useMemo">09-useMemo</Link></li>
           <li><Link to="/useReducer">09-useReducer</Link></li>
+          <li><Link to="/chain">10-chain</Link></li>
+          <li><Link to="/hoc">11-hoc</Link></li>
+          <li><Link to="/useUser">12-useUser</Link></li>
+          <li><Link to="/animation">13-animation</Link></li>
         </ul>
         <div style={{flex:1}}>
           <Route exact path="/" component={Home} />
@@ -45,6 +53,10 @@ const App = function () {
           <Route path="/useCallback" component={UseCallback} />
           <Route path="/useMemo" component={UseMemo} />
           <Route path="/useReducer" component={UseReducer} />
+          <Route path="/chain" component={Chain} />
+          <Route path="/hoc" component={Hoc} />
+          <Route path="/useUser" component={UseUser} />
+          <Route path="/animation" component={Animation} />
         </div>
       </div>
     </Router>
