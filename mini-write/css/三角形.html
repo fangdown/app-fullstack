@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三角形</title>
+  <style>
+    .box1,.box2,.box3, .box4{
+      width: 0;
+      height: 0;
+      float: left;
+      border-style: solid;
+      margin: 10px;
+    }
+    .box1{
+      border-width: 100px;
+      border-color: tomato transparent transparent transparent;
+    }
+    .box2{
+      border-width: 100px 173px;
+      border-color:  transparent tomato transparent transparent;
+    }
+    .box3{
+      border-width: 100px 80px;
+      border-color: transparent transparent tomato transparent;
+    }
+    .box4{
+      border-width: 100px 90px 80px 70px;
+      border-color: transparent transparent transparent tomato;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo">
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>两栏布局</title>
+  <style>
+    .outer{
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    .left{
+      background: green;
+      height: 100px;
+    }
+    .right{
+      background: gold;
+      height: 100px;
+    }
+    .outer1 .left{
+      width: 200px;
+      float: left;
+    }
+    .outer1 .right{
+      width: auto;
+      margin-left: 200px;
+    }
+    .outer2{
+      display: flex;
+    }
+    .outer2 .left{
+     width: 200px; 
+    }
+    .outer2 .right{
+      flex: 1;
+    }
+    .outer3{
+      position: relative;
+    }
+    .outer3 .left{
+      position: absolute;
+      width: 200px;
+    }
+    .outer3 .right{
+      margin-left: 200px;
+    }
+    .outer4{
+      position: relative;
+    }
+    .outer4 .left{
+      width: 200px;
+    }
+    .outer4 .right{
+      position: absolute;
+      top: 0;
+      left: 200px;
+      bottom: 0;
+      right: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div>
+    <p>要求：垂直两栏，左边固定右边自适应。</p>
+    四种方式
+    <ul>
+      <li>浮动方式</li>
+      <li>flex</li>
+      <li>absolute-left</li>
+      <li>absolute-right</li>
+    </ul>
+    <div class="demo">
+      <div class="outer outer1">
+        <div class="left">1-left</div>
+        <div class="right">1-right</div>
+      </div>
+      <div class="outer outer2">
+        <div class="left">2-left</div>
+        <div class="right">2-right</div>
+      </div>
+      <div class="outer outer3">
+        <div class="left">3-left</div>
+        <div class="right">3-right</div>
+      </div>
+      <div class="outer outer4">
+        <div class="left">4-left</div>
+        <div class="right">4-right</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
