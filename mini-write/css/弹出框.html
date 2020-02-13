@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹出框</title>
+  <style>
+    .bg{
+      width: 100%;
+      height: 1000px;
+    }
+    .dialog{
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      background: (0,0,0,.5);
+    }
+    .dialog .content{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 400px;
+      border-radius: 5px;
+      border: 1px solid #eeeeee;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <p>使用 CSS 写一个弹出框效果</p>
+  <div class="bg"></div>
+  <div class="dialog">
+    <div class="content">弹出框</div>
+  </div>
+</body>
+</html>

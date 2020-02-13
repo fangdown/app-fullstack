@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>清除浮动</title>
+  <style>
+    .outer{position: relative;width:200px;margin: 10px;background: tomato;}
+    .inner{
+      float: left;
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      background: thistle;
+    }
+    .outer1::after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .outer2{
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <p>要求：清除浮动</p>
+  <ul>
+    <li>伪元素after+clear</li>
+    <li>BFC-overflow:hidden</li>
+  </ul>
+  <div class="demo">
+    <div class="outer outer1">
+      <div class="inner"></div>
+    </div>
+    <div class="outer outer2">
+      <div class="inner"></div>
+    </div>
+  </div>
+</body>
+</html>
