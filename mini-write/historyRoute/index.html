@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>history路由</title>
+</head>
+
+<body>
+  <header>
+    <a onclick="changeRoute(this)" data-path="home"> 首页</a>
+    <a onclick="changeRoute(this)" data-path="center"> 个人中心</a>
+    <a onclick="changeRoute(this)" data-path="help"> 帮助</a>
+  </header>
+  <div id="content"></div>
+  <script>
+    function changeRoute(route) {
+      let path = route.dataset.path
+      changePage(path)
+      /**
+     * window.history.pushState(state, title, url)
+     * state：一个与添加的记录相关联的状态对象，主要用于popstate事件。该事件触发时，该对象会传入回调函数。
+     *        也就是说，浏览器会将这个对象序列化以后保留在本地，重新载入这个页面的时候，可以拿到这个对象。
+     *        如果不需要这个对象，此处可以填 null。
+     * title：新页面的标题。但是，现在所有浏览器都忽视这个参数，所以这里可以填空字符串。
+     * url：新的网址，必须与当前页面处在同一个域。浏览器的地址栏将显示这个网址。
+     * */
+      history.pushState({ content: path }, null, path)
+    }
+    function changePage(content) {
+      const html = document.getElementById('content')
+      html.innerHTML = content
+    }
+    window.addEventListener('popstate', e => {
+      let content = e.state && e.state.content
+      changePage(content)
+    })
+
+  </script>
+</body>
+
+</html>
