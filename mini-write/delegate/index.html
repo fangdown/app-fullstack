@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>delegate</title>
+  <style>
+    #root {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #eee;
+    }
+
+    #content {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div id="content"></div>
+  </div>
+  <script>
+
+    function delegate(parent, eventType, selector, fn) {
+      let parentDom
+      if (typeof parent === 'string') {
+        parentDom = document.getElementById(parent)
+        if (!parentDom) throw TypeError('parent is not element')
+      }
+      if (typeof fn !== 'function') throw TypeError('fn is not function')
+      function handle(e) {
+        e = e || window.event
+        let target = e.target || e.srcElement
+        if (target.id === selector || target.className.indexOf(selector) > -1) {
+          fn.call(target)
+        }
+      }
+      parentDom[eventType] = handle
+    }
+    // demo
+    delegate('root', 'onclick', 'content', function () {
+      console.log('被点击了', this)
+    })
+  </script>
+</body>
+
+</html>

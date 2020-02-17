@@ -1,3 +1,13 @@
+/**
+ * 思路：要考虑的几个类型 null、数组、对象，嵌套引用
+直接相等
+判断null
+判断基本类型
+判断是否为数组和对象
+递归判断数组和对象里面的值
+ * @param {*} src 
+ * @param {*} target 
+ */
 function deepIsEqual(src, target) {
   if (src === target) return true
   if (src === null || target === null) return src === target

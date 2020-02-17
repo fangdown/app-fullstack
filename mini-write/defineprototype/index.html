@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>defineProperty</title>
+</head>
+
+<body>
+  <p>defineProperty测试。在input中输入， 同步变化到上面的文本</p>
+  <p>
+    值是：<span id="content"></span>
+  </p>
+  <input type="text" id="inputContent" onkeyup="handleKeyUp()" />
+  <script>
+    const obj = {
+      value: ''
+    }
+    function handleKeyUp(e) {
+      obj.value = document.getElementById('inputContent').value
+    }
+    Object.defineProperty(obj, 'value', {
+      get: function () {
+        return value
+      },
+      set: function (newValue) {
+        value = newValue
+        document.getElementById('content').innerText = newValue
+      }
+    })
+
+  </script>
+</body>
+
+</html>

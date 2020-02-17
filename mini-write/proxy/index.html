@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>proxy</title>
+</head>
+
+<body>
+  <p>proxy 同步变化到上面的文本, 返回一个新对象，参数也不相同</p>
+  <p>
+    值是：<span id="content"></span>
+  </p>
+  <input type="text" id="inputContent" onkeyup="handleKeyUp()" />
+  <script>
+    const obj = {
+      value: ''
+    }
+    function handleKeyUp(e) {
+      newObj.value = document.getElementById('inputContent').value
+    }
+    // 返回一个新的对象
+    const newObj = new Proxy(obj, {
+      get: function (target, key, receiver) {
+
+        return Reflect.get(target, key, receiver)
+      },
+      set: function (target, key, value, receiver) {
+        // console.log('target', target)
+        // console.log('key', key)
+        // console.log('receiver', receiver)
+        if (key === 'value') {
+          document.getElementById('content').innerText = value
+        }
+        return Reflect.set(target, key, value, receiver)
+      }
+    })
+
+  </script>
+</body>
+
+</html>
