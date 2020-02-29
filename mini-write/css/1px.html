@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1px像素实现</title>
+  <style>
+    body {
+      font-size: 16px;
+    }
+
+    .demo1 {
+      position: relative;
+      height: 100px;
+      width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .demo1::after {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: '';
+      width: 100%;
+      height: 1px;
+      border-bottom: 1px solid #e5e5e5;
+      transform: scaleY(0.5);
+      display: block;
+    }
+
+    .demo2 {
+      position: relative;
+      height: 100px;
+      width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .demo2::after {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: '';
+      width: 1px;
+      height: 100%;
+      border-left: 1px solid #e5e5e5;
+      transform: scaleX(0.5);
+      display: block;
+    }
+
+    .demo3 {
+      position: relative;
+      height: 100px;
+      width: 200px;
+    }
+
+    .demo3::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      content: ' ';
+      transform: scale(0.5);
+      transform-origin: left top;
+      box-sizing: border-box;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+    }
+
+    .demo4 {
+      width: 2rem;
+      height: 1rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <div class="demo1">
+      1条border(上下)
+    </div>
+    <div class="demo2">
+      1条border(左右)
+    </div>
+    <div class="demo3">
+      4条border
+    </div>
+    <div class="demo4">
+      scale+rem
+    </div>
+  </div>
+  <script>
+    let viewport = document.querySelector('meta[name=viewport]')
+    if (window.devicePixelRatio === 1) {
+      viewport.setAttribute('content', 'width=device-width,initial-scale=1,maxinum-scale=1,mininum=1,user-scale=no')
+    } else if (window.devicePixelRatio === 2) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.5,maxinum-scale=0.5,mininum-scale=0.5,user-scale=no')
+    } else if (window.devicePixelRatio === 3) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=0.33333,maxinum-scale=0.33333,mininum-scale=0.33333,user-scale=no')
+    }
+    let docHtml = document.documentElement
+    let fontSize = 100 * (docHtml.clientWidth / 750) + 'px'
+    docHtml.style.fontSize = fontSize
+  </script>
+</body>
+
+</html>
