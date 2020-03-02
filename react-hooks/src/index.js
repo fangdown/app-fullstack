@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { 
+import {
   BrowserRouter as Router,
   Route,
-  Link} from 'react-router-dom'
+  Link
+} from 'react-router-dom'
 import State from './useState'
 import UseEffect from './useEffect'
 import LifeCycle from './lifeCycle'
@@ -23,8 +24,8 @@ import './index.less'
 const App = function () {
   return (
     <Router>
-      <div  style={{display:'flex', height: '100%'}}>
-        <ul className="nav" style={{width: '200px', borderRight: '1px solid #eee', listStyle:'none'}}>
+      <div style={{ display: 'flex', height: '100%' }}>
+        <ul className="nav" style={{ width: '200px', borderRight: '1px solid #eee', listStyle: 'none' }}>
           <li><Link to="/">1-basic</Link></li>
           <li><Link to="/useState">01-useState</Link></li>
           <li><Link to="/useEffect">02-useEffect</Link></li>
@@ -41,7 +42,7 @@ const App = function () {
           <li><Link to="/useUser">12-useUser</Link></li>
           <li><Link to="/animation">13-animation</Link></li>
         </ul>
-        <div style={{flex:1}}>
+        <div style={{ flex: 1 }}>
           <Route exact path="/" component={Home} />
           <Route path="/useState" component={State} />
           <Route path="/useEffect" component={UseEffect} />
@@ -62,7 +63,7 @@ const App = function () {
     </Router>
   )
 }
-const Home = function (){
+const Home = function () {
   return (
     <div>111</div>
   )

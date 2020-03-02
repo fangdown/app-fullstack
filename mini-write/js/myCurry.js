@@ -26,3 +26,25 @@ let res = multi(2, 3, 4);
 let res1 = multi(2)(3, 4);
 console.log('res', res())
 console.log('res1: ', res1());
+
+
+function curry(fn, args) {
+  var length = fn.length;
+  var args = args || [];
+  return function () {
+    newArgs = args.concat(Array.prototype.slice.call(arguments))
+    console.log(newArgs)
+    if (newArgs.length < length) {
+      return curry.call(this, fn, newArgs);
+    } else {
+      return fn.apply(this, newArgs);
+    }
+  }
+}
+function multiFn1(a, b, c) {
+  console.log(a * b * c)
+  return a * b * c;
+}
+
+var multi = curry(multiFn1);
+multi(2)(3)(4)
