@@ -4,6 +4,13 @@
  * 执行完成后调用resolve/reject
  * resolve之前使用then, 则把callback放入回调队列，等resolve之后依次执行
  * resolve之后调用then， 则直接执行callback
+ *
+ * then 是一个函数，返回一个promise
+ * 第一个参数A一个函数是类似 .then(data => console.log(data))
+ * A函数的返回值x有2种：
+ * 1- undefined（没有return 一个值）或者return了一个不是promise的值， 调用resolve(x)
+ * 2- 返回了一个promise，调用 x.then(resolve)
+ *
  */
 const PENDDING = 1
 const FULFILLED = 2
@@ -18,7 +25,7 @@ function MyPromsie(executor) {
     if (self.state === PENDDING) {
       self.state = FULFILLED
       self.val = val
-      console.log('self.resolveQueue', self.resolveQueue)
+      // console.log('self.resolveQueue', self.resolveQueue.length)
       self.resolveQueue.forEach(cb => cb(val))
     }
   }
@@ -37,14 +44,18 @@ function MyPromsie(executor) {
   }
 }
 
-MyPromsie.prototype.then = function (onResolve, onReject) {
+MyPromsie.prototype.then = function(onResolve, onReject) {
+  // console.log('onResolve', onResolve)
   let self = this
   onResolve = typeof onResolve === 'function' ? onResolve : v => v
-  onReject = typeof onReject === 'function' ? onReject : err => { throw err }
-  console.log('then-start', self.state)
+  onReject =
+    typeof onReject === 'function'
+      ? onReject
+      : err => {
+          throw err
+        }
   if (self.state === FULFILLED) {
-    console.log('fulfilled')
-    return new MyPromsie(function (resolve, reject) {
+    return new MyPromsie(function(resolve, reject) {
       setTimeout(() => {
         try {
           let x = onResolve(self.val)
@@ -56,11 +67,11 @@ MyPromsie.prototype.then = function (onResolve, onReject) {
         } catch (error) {
           reject(error)
         }
-      }, 0);
+      }, 0)
     })
   }
   if (self.state === REJECTED) {
-    return new MyPromsie(function (resolve, reject) {
+    return new MyPromsie(function(resolve, reject) {
       setTimeout(() => {
         try {
           let x = onReject(self.val)
@@ -72,12 +83,12 @@ MyPromsie.prototype.then = function (onResolve, onReject) {
         } catch (error) {
           reject(error)
         }
-      }, 0);
+      }, 0)
     })
   }
   if (self.state === PENDDING) {
     console.log('pendding')
-    return new MyPromsie(function (resolve, reject) {
+    return new MyPromsie(function(resolve, reject) {
       self.resolveQueue.push(val => {
         try {
           let x = onResolve(val)
@@ -106,48 +117,50 @@ MyPromsie.prototype.then = function (onResolve, onReject) {
   }
 }
 // 等同于执行then中第二个函数
-MyPromsie.prototype.catch = function (onReject) {
+MyPromsie.prototype.catch = function(onReject) {
   return this.then(null, onReject)
 }
 // 比较执行且正确执行完的数量
-MyPromsie.prototype.all = function (promises) {
-  return new MyPromsie(function (resolve, reject) {
+MyPromsie.prototype.all = function(promises) {
+  return new MyPromsie(function(resolve, reject) {
     let count = 0
     let result = []
     const len = promises.length
     for (let i = 0; i < len; i++) {
-      promises[i].then(val => {
-        result[i] = val
-        if (++count === len) {
-          resolve(result)
+      promises[i].then(
+        val => {
+          result[i] = val
+          if (++count === len) {
+            resolve(result)
+          }
+        },
+        error => {
+          reject(error)
         }
-      }, error => {
-        reject(error)
-      })
+      )
     }
   })
 }
 // 执行第一个resolve的
-MyPromsie.prototype.race = function (promises) {
-  return new MyPromsie(function (resolve, reject) {
+MyPromsie.prototype.race = function(promises) {
+  return new MyPromsie(function(resolve, reject) {
     for (let i = 0; i < promises.length; i++) {
       promises[i].then(resolve, reject)
     }
   })
 }
 // 新生成一个promise，执行resolve
-MyPromsie.resolve = function (val) {
-  return new MyPromsie(function (resolve) {
+MyPromsie.resolve = function(val) {
+  return new MyPromsie(function(resolve) {
     resolve(val)
   })
 }
 // 新生成一个promise，执行resject
-MyPromsie.reject = function (error) {
-  return new MyPromsie(function (resolve, reject) {
+MyPromsie.reject = function(error) {
+  return new MyPromsie(function(resolve, reject) {
     reject(error)
   })
 }
-
 
 // let p = new Promise(function (resolve) {
 //   setTimeout(() => {
@@ -156,16 +169,24 @@ MyPromsie.reject = function (error) {
 // })
 // p.then(data => console.log(data))
 
-
-let p1 = new MyPromsie(function (resolve) {
+let p1 = new MyPromsie(function(resolve) {
   setTimeout(() => {
     resolve(1)
-  }, 0);
+  }, 0)
 })
-// console.log(p1)
+console.log('p1', p1)
+
+let r1 = p1
+  .then(data => console.log(data))
+  .then(x => x)
+  .then(x => new MyPromsie(resolve => resolve(3)))
+// let r2 = r1.then(data => console.log('data2', data))
+console.log('r1', r1)
+// console.log('r2', r2)
+
 // setTimeout(() => {
 //   console.log(p1);
 //   p1.then(data => console.log(data))
 // }, 19);
 
-MyPromsie.resolve(2).then(x => console.log(x))
+// MyPromsie.resolve(2).then(x => console.log(x))
