@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8" />
+    <title>www.jb51.net JS匀速/减速运动</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .box1 {
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        margin-top: 10px;
+        position: relative;
+      }
+      .box2 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        margin-top: 10px;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <button>匀速移动</button>
+    <button>减速移动</button>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <script>
+      // 动画原理 = 盒子位置 + 步长。
+      //   1.闪动。 （瞬间到达）
+      //   2.匀速。 （每次走一样距离）
+      //   3.缓动。 （开始特快越走越慢，步长越来越小）
+      //        （类似刹车，电梯停止，压缩弹簧...）
+      // 好处：
+      //   1.有非常逼真的缓动效果，实现的动画效果更细腻。
+      //   2.如果不清除定时器，物体永远跟着目标在移动。
+      var box1 = document.getElementsByClassName('box1')[0]
+      var box2 = document.getElementsByClassName('box2')[0]
+      var but1 = document.getElementsByTagName('button')[0]
+      var but2 = document.getElementsByTagName('button')[1]
+      console.log(box1.offsetLeft)
+      but1.onclick = function() {
+        animate1(box1, 200)
+      }
+      but2.onclick = function() {
+        animate2(box2, 500)
+      }
+      //匀速动画
+      function animate1(ele, target) {
+        //要用定时器，先清除定时器
+        //一个盒子只能有一个定时器，这样儿的话，不会和其他盒子出现定时器冲突
+        //而定时器本身讲成为盒子的一个属性
+        clearInterval(ele.timer)
+        //我们要求盒子既能向前又能向后，那么我们的步长就得有正有负
+        //目标值如果大于当前值取正，目标值如果小于当前值取负
+        var speed = target > ele.offsetLeft ? 3 : -3
+        ele.timer = setInterval(function() {
+          //在执行之前就获取当前值和目标值之差
+          var val = target - ele.offsetLeft
+          ele.style.left = ele.offsetLeft + speed + 'px'
+          //目标值和当前值只差如果小于步长，那么就不能在前进了
+          //因为步长有正有负，所有转换成绝对值来比较
+          if (Math.abs(val) <= Math.abs(speed)) {
+            ele.style.left = target + 'px'
+            clearInterval(ele.timer)
+          }
+        }, 30)
+      }
+      //缓动动画封装
+      function animate2(ele, target) {
+        clearInterval(ele.timer) //清楚历史定时器
+        ele.timer = setInterval(function() {
+          //获取步长 确定移动方向(正负值) 步长应该是越来越小的，缓动的算法。
+          console.log('ele.offsetLeft', ele.offsetLeft)
+
+          var step = (target - ele.offsetLeft) / 10
+          //对步长进行二次加工(大于0向上取整,小于0项下取整)
+          step = step > 0 ? Math.ceil(step) : Math.floor(step)
+          //动画原理： 目标位置 = 当前位置 + 步长
+          console.log(step)
+          ele.style.left = ele.offsetLeft + step + 'px'
+          //检测缓动动画有没有停止
+          if (Math.abs(target - ele.offsetLeft) <= Math.abs(step)) {
+            ele.style.left = target + 'px' //直接移动指定位置
+            clearInterval(ele.timer)
+            setTimeout(function() {
+              ele.style.left = '0px'
+            }, 1000)
+          }
+        }, 30)
+      }
+    </script>
+  </body>
+</html>

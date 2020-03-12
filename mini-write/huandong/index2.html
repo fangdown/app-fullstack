@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js控制滑动</title>
+    <style>
+      .box1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        /* 重要 ，不设置不会动*/
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn1">减速滑动</button>
+    <button id="btn2">匀速滑动</button>
+    <div id="box1" class="box1"></div>
+    <script>
+      let btn1 = document.getElementById('btn1')
+      let btn2 = document.getElementById('btn2')
+      let box1 = document.getElementById('box1')
+      btn1.addEventListener('click', function() {
+        animation1(box1, 500)
+      })
+      btn2.addEventListener('click', function() {
+        animation2(box1, 500)
+      })
+      function animation1(ele, target) {
+        clearInterval(ele.timer)
+        ele.timer = setInterval(function() {
+          let step = (target - ele.offsetLeft) / 10
+          step = step > 0 ? Math.ceil(step) : Math.floor(step)
+          ele.style.left = ele.offsetLeft + step + 'px'
+          if (target - ele.offsetLeft <= step) {
+            ele.style.left = target + 'px'
+            clearInterval(ele.timer)
+            setTimeout(function() {
+              ele.style.left = '0px'
+            }, 1000)
+          }
+        }, 30)
+      }
+      function animation2(ele, target) {
+        ele.timer = setInterval(() => {
+          let speed = target > ele.offsetLeft ? 3 : -3
+          ele.style.left = ele.offsetLeft + speed + 'px'
+          if (target - ele.offsetLeft <= speed) {
+            ele.style.left = target + 'px'
+            clearInterval(ele.timer)
+          }
+        }, 30)
+      }
+    </script>
+  </body>
+</html>
