@@ -11,14 +11,16 @@ function myReduce(arr, callback, initial) {
   for (; i < arr.length; i++) {
     prev = callback(prev, arr[i], i, arr)
   }
-  return acc
-
+  return prev
 }
 // demo
 const arr = [1, 2, 3, 4]
 myReduce(arr, (prev, current, i, arr) => {
-  console.log('prev', prev);
-  console.log('current', current);
-  console.log('i', i);
+  console.log('prev', prev)
+  console.log('current', current)
+  console.log('i', i)
   return prev + current
 })
+module.exports = { myReduce }
+
+console.log('module myModule:', module)

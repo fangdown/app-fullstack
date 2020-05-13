@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>溢出省略</title>
+    <style>
+      .demo {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .multline {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .demo3 {
+        max-height: 40px;
+        line-height: 20px;
+        overflow: hidden;
+      }
+      .demo4 {
+        position: relative;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+      }
+      .demo4::after {
+        content: '...';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0px;
+        z-index: 2;
+        background-color: #fff;
+      }
+      .demo5 {
+        position: relative;
+        line-height: 20px;
+        max-height: 40px;
+        overflow: hidden;
+      }
+      .demo5::before {
+        float: left;
+        width: 20px;
+        height: 40px;
+        content: '';
+      }
+      .demo5 .text {
+        float: right;
+        width: 100%;
+        margin-left: -20px;
+      }
+      .demo5::after {
+        float: right;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        left: 100%;
+        content: '...';
+        background-color: #fff;
+        transform: translate(-100%, -100%);
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>单行</li>
+      <li>多行-webkit-box</li>
+      <li>line-height翻倍-无省略</li>
+      <li>伪元素</li>
+      <li>伪元素+float</li>
+      <li>js计算</li>
+      <li>canvas（ctx.measureText(txt).width获取宽度）</li>
+      <li>第三方组件</li>
+    </ul>
+    <div class="demo">
+      这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+    </div>
+    <br />
+    <div class="multline">
+      这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+    </div>
+    <br />
+    <div class="demo3">
+      这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+    </div>
+    <br />
+    <div class="demo4">
+      这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+    </div>
+    <br />
+    <div class="demo5">
+      <div class="text">
+        这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+      </div>
+    </div>
+    <br />
+    <div class="demo6">
+      这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本
+    </div>
+    <script>
+      const text =
+        '这是一段很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本'
+      const totalTextLen = text.length
+      const formatStr = () => {
+        const ele = document.getElementsByClassName('demo6')[0]
+        const lineNum = 2
+        const baseWidth = window.getComputedStyle(ele).width
+        const baseFontSize = window.getComputedStyle(ele).fontSize
+        const lineWidth = +baseWidth.slice(0, -2) // 去掉px
+        // 所计算的strNum为元素内部一行可容纳的字数(不区分中英文)
+        const strNum = Math.floor(lineWidth / +baseFontSize.slice(0, -2))
+        let content = ''
+        // 多行可容纳总字数
+        const totalStrNum = Math.floor(strNum * lineNum)
+
+        const lastIndex = totalStrNum - totalTextLen
+
+        if (totalTextLen > totalStrNum) {
+          content = text.slice(0, lastIndex - 3).concat('...')
+        } else {
+          content = text
+        }
+        ele.innerHTML = content
+      }
+      formatStr()
+      window.onresize = () => {
+        formatStr()
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vdom</title>
+    <style>
+      .root {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #eeeeee;
+      }
+      .item {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #eeeeee;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let vdom = {
+        type: 'div',
+        props: {
+          className: 'root',
+          onClick: function() {
+            console.log('click', this)
+          }
+        },
+        children: [
+          {
+            type: 'span',
+            props: {
+              className: 'item',
+              style: { 'font-size': '20px', color: 'red' }
+            }
+          },
+          {
+            type: 'span',
+            props: {
+              className: 'item'
+            }
+          }
+        ]
+      }
+      function createElement(vdom) {
+        let { type, props, children } = vdom
+        let node = document.createElement(type)
+        Object.keys(props).forEach(item => {
+          if (item === 'className') {
+            node.setAttribute('class', props[item])
+          } else if (item === 'style') {
+            const styleObj = props[item]
+            const style = Object.keys(styleObj)
+              .map(s => `${s}: ${styleObj[s]}`)
+              .join(',')
+            node.setAttribute('style', style)
+          } else if (item.startsWith('on')) {
+            let event = item.toLowerCase()
+            node[event] = props[item]
+          }
+        })
+        children &&
+          children.forEach(item => {
+            let dom = createElement(item)
+            node.appendChild(dom)
+          })
+        return node
+      }
+      let dom = createElement(vdom)
+      document.body.appendChild(dom)
+    </script>
+  </body>
+</html>

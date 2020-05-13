@@ -28,3 +28,9 @@ let r1 = multi(2)(3)(4)
 let r2 = multi(2)(3)
 console.log(r1) // 24
 console.log(r2) // [Function]
+
+module.exports = { curry }
+const { myReduce } = require('./myReduce.js')
+console.log('myReduce', myReduce)
+
+console.log('module', module)
